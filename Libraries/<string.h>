@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+    
+    // ##### <string.h> ##### //
+    
+    // 1. strcpy():
+    
+    // Prototype: char* strcpy(char* destination, const char* source) 
+    // In entire process the source is not modified therefore const keyword is used
+    // strcpy returns the pointer to the first character of the string which is copied in the destination. Hence if we use %s, then whole string will be printed in the screen
+
+    char str1[10] = "Hello";
+    char str2[10];
+    
+    printf("%s \n", strcpy(str2, str1));
+    printf("%s \n", str2);
+    
+    char str3[10];
+    strcpy(str3, strcpy(str2, str1));
+    printf("%s %s \n", str2, str3);
+    
+    // !!!Note: In the call to strcpy(str1, str2), there is no way the strcpy will check whether the string pointed by str2 fits in str1
+    // If the length of the string pointed by str2 is greater than the length of the character array str1 then it will be an undefined behaviour
+    
+// #######################################################################    
+
+    // 2. strncpy():
+    
+    // Prototype: strncpy(destination, source, sizeof(destination))
+    
+    char s1[6] = "Hello";
+    char s2[4];
+    strncpy(s2, s1, sizeof(s2));
+    printf("%s \n", s2);
+    // HellHello
+    
+    // strncpy will leave the string in destination without a terminating NULL character. If the size of source is equal or greater than size of destination
+    // Use this:
+    
+    char st1[6] = "Hello";
+    char st2[6];
+    strncpy(st2, st1, sizeof(st2));
+    st2[sizeof(st2) - 1] = '\0';
+    printf("%s \n", st2);
+    
+// #######################################################################  
+
+    // 3. strlen();
+    
+    // Prototype: size_t strlen(const char* str);
+    
+    // size_t: it is an unsigned integer type of atleast 16bits, since strlen returns an integer
+    // To strlen(), We are passing the pointer to 1st character to the string
+    // It doesn't count the NULL character
+    
+    char *len1 = "Hello World";
+    printf("%ld \n", strlen(len1));
+    
+    char len2[] = "Hello World";
+    printf("%ld \n", strlen(len1));
+    
+    char len3[100] = "Hello World";
+    printf("%ld \n", strlen(len1));
+    
+// #######################################################################      
+    
+    // 4. strcat():
+    
+    // Prototype: char* strcat(char* str1, const char* str2);
+    
+    // strcat() appends the content of string str2 at the end of the sting str1
+    // It returns the pointer to the resulting string str1
+    
+    char string1[100], string2[100];
+    strcpy(string1, "Welcome to");
+    strcpy(string2, " World of Gods");
+    strcat(string1, string2);
+    printf("%s \n", string1);
+    
+    // If ---> char string1[15], string2[100];
+    // It would return an Undefined Behaviour
+    
+// #######################################################################      
+
+    // 5. strncat();
+    
+    // It append limited number of characters specified in 3rd argument
+    // It add a NULL character on it own
+    
+    char stri1[5], stri2[100];
+    strcpy(stri1, "He");
+    strcpy(stri2, "llo!");
+    strncat(stri1, stri2, sizeof(stri1) - strlen(stri1) - 1);
+    // above -1 creates room for NULL character
+    printf("%s \n", stri1);
+    
+// #######################################################################      
+
+    // 6. strcmp();
+    
+    // Prototype: int strcmp(const char* str1, const char* str2);
+    
+    // Compares str1 and str2
+    // Return value:
+    // - less than 0, if str1<str2
+    // - greater than 0, if str1>str2
+    // - equal to 0, if str1==str2
+    
+    // ASCII code:
+    // space < digits < uppercase < lowercase
+    
+    char *word1 = "abc";
+    char *word2 = "abcd";
+    if(strcmp(word1, word2) < 0){
+        printf("%s is less than %s \n", word1, word2);
+    } else {
+        printf("%s is less than %s \n", word2, word1);
+    }
+    
+    char *letter1 = "abce";
+    char *letter2 = "abcd";
+    if(strcmp(letter1, letter2) < 0){
+        printf("%s is less than %s \n", letter1, letter2);
+    } else {
+        printf("%s is less than %s \n", letter2, letter1);
+    }
+    
+    return 0;
+}
